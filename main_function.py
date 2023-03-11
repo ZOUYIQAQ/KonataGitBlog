@@ -86,9 +86,10 @@ class Order:
                     sys.stdout.write(eout, color='red')
                     # print(eout)
         # 判断是否存在信号以便于传递信号
-        if signal is not None and eout == '':
+        if signal is not None and (eout == b'' or eout != ''):
             signal.emit(massage, None)
-        elif signal is not None and eout != '':
+        elif signal is not None and eout != b'' and eout != '':
+            sys.stdout.write(eout.decode(), color='red')
             signal.emit('执行命令发生错误', 'red')
         return nout, eout
     # 显示更多命令,暂时弃用
